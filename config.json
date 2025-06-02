@@ -1,0 +1,9 @@
+{
+  "IP":"http://10.176.69.101:3000",
+  "Token": " ",
+  "BME280": true,
+  "Camera": false,
+  "YL-69": true,
+  "MQ135": true
+
+}
