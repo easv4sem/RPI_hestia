@@ -17,7 +17,7 @@ cs = digitalio.DigitalInOut(board.D22)
 # create the mcp object
 mcp = MCP.MCP3008(spi, cs)
  
-# create an analog input channel on pin 0
+# create an analog input channel on pin 1
 chan1 = AnalogIn(mcp, MCP.P1)
 
 
@@ -63,17 +63,17 @@ def measure_moisture():
         #logger.info(f"Moisture percent: {percent_value} % (sensor value: {current_value})
 
         data = {
-	    "YL-69":{
+	        "YL-69":{
                 "raw_data" : raw_value,
                 "percent" : percent_value,
-	        "Type": "YL-69"
-	    }
+	            "Type": "YL-69"
+	        }
         }
 
         return data
 
 
-    # CHATGPT! 
+
     except ValueError as value_error:
         #logger.error(f"ValueError: {value_error}")
         print(f"Error: {value_error}")
