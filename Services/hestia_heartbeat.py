@@ -24,6 +24,9 @@ def heart_beat():
         api_POST(BASE_URL, heart_beat_payload())
         time.sleep(60)
 
+def one_time_heartbeat():
+	api_POST(BASE_URL, heart_beat_payload())
+
 
 def heart_beat_payload():
 
