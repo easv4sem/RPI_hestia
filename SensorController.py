@@ -1,6 +1,7 @@
 #from Services.hestia_logger import setuplogger
 from Services.hestia_api_service import api_GET, api_POST
-from Services.hestia_heartbeat import start_heartbeat_thread
+from Services.hestia_heartbeat import start_heartbeat_thread, one_time_heartbeat
+from Services.hestia_rgb_led import start_led_thread
 
 from Utility.Mac_Address_Util import get_mac_address
 from Utility.Date_Util import get_date
@@ -10,12 +11,19 @@ from Modules.ParticalModule import read_smoke_level
 from Modules.BarometerModule import measure_barometer
 from Modules.BuzzerModule import buzzing
 
+import RPi.GPIO as GPIO
 import json
 import time
 
 with open('config.json') as json_data:
 	d = json.load(json_data)
 	BASE_URL = d['IP']
+
+def on_call_heartbeat(channle):
+	one_time_heartbeat()
+
+GPIO.setup(27, GPIO.IN, pull_up_down = GPIO.PUD_UP)
+GPIO.add_event_detect(27, GPIO.FALLING, callback=on_call_heartbeat)
 
 def get_from_api(url):
 
@@ -68,6 +76,8 @@ def main_loop():
 		time.sleep(10)
 
 start_heartbeat_thread()
+
+start_led_thread()
 
 main_loop()
 
